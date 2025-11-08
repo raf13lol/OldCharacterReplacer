@@ -19,7 +19,7 @@ namespace OldCharacterReplacer;
 public partial class OldCharacterReplacer : BaseUnityPlugin
 #pragma warning restore BepInEx002 // Classes with BepInPlugin attribute must inherit from BaseUnityPlugin
 {
-    public static string path = AppDomain.CurrentDomain.BaseDirectory + @"\BepInEx\plugins\ocrData";
+    public static string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "BepInEx", "plugins", "ocrData");
     // illegal characters
     public static string dictionaryPrefix = @"|?#<OCR>#?|\/";
     public static MethodInfo loadTexture2D;

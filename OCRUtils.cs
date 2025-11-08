@@ -64,19 +64,19 @@ public class OCRUtils
         if (!IsCustomLevel())
             return;
 
-        var path = OldCharacterReplacer.path + $@"\{name}\";
+        var path = Path.Combine(OldCharacterReplacer.path, name);
         var dictionaryPrefix = OldCharacterReplacer.dictionaryPrefix;
         var ccd = scnGame.instance.currentLevel.customCharacterData;
         var key = dictionaryPrefix + name;
         if (ccd.ContainsKey(key))
             return;
 
-        Texture2D img = LoadTex2D($@"{path}\{name}.png", key + "normal");
-        Texture2D outline = LoadTex2D($@"{path}\{name}_outline.png", key + "outline");
-        Texture2D glow = LoadTex2D($@"{path}\{name}_glow.png", key + "glow");
-        Texture2D freeze = LoadTex2D($@"{path}\{name}_freeze.png", key + "freeze");
+        Texture2D img = LoadTex2D(Path.Combine(path, $"{name}.png"), key + "normal");
+        Texture2D outline = LoadTex2D(Path.Combine(path, $"{name}_outline.png"), key + "outline");
+        Texture2D glow = LoadTex2D(Path.Combine(path, $"{name}_glow.png"), key + "glow");
+        Texture2D freeze = LoadTex2D(Path.Combine(path, $"{name}_freeze.png"), key + "freeze");
 
-        string jsonTxt = File.ReadAllText($"{path}\\{name}.json");
+        string jsonTxt = File.ReadAllText(Path.Combine(path, $"{name}.json"));
         img.filterMode = FilterMode.Point;
         img.wrapMode = TextureWrapMode.Clamp;
 
