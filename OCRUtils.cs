@@ -71,10 +71,10 @@ public class OCRUtils
         if (ccd.ContainsKey(key))
             return;
 
-        Texture2D img = LoadTex2D(Path.Combine(path, $"{name}.png"), key + "normal");
-        Texture2D outline = LoadTex2D(Path.Combine(path, $"{name}_outline.png"), key + "outline");
-        Texture2D glow = LoadTex2D(Path.Combine(path, $"{name}_glow.png"), key + "glow");
-        Texture2D freeze = LoadTex2D(Path.Combine(path, $"{name}_freeze.png"), key + "freeze");
+        Texture2D img = LoadTex2D(Path.Combine(path, $"{name}.png"), key + "normal", false);
+        Texture2D outline = LoadTex2D(Path.Combine(path, $"{name}_outline.png"), key + "outline", true);
+        Texture2D glow = LoadTex2D(Path.Combine(path, $"{name}_glow.png"), key + "glow", true);
+        Texture2D freeze = LoadTex2D(Path.Combine(path, $"{name}_freeze.png"), key + "freeze", true);
 
         string jsonTxt = File.ReadAllText(Path.Combine(path, $"{name}.json"));
         img.filterMode = FilterMode.Point;
@@ -83,12 +83,12 @@ public class OCRUtils
         LevelBase.LoadCustomCharacter(ccd, key, jsonTxt, img, outline, glow, freeze);
     }
 
-    private static Texture2D LoadTex2D(string path, string key)
+    private static Texture2D LoadTex2D(string path, string key, bool isAlpha8)
     {
         if (scrVfxControl.textureCache.TryGetValue(key, out CachedTexture tex))
             return tex.texture;
             
-        return (Texture2D)OldCharacterReplacer.loadTexture2D.Invoke(null, [scrVfxControl.textureCache, path, key]);
+        return (Texture2D)OldCharacterReplacer.loadTexture2D.Invoke(null, [scrVfxControl.textureCache, path, key, isAlpha8]);
     }
 
     public static bool IsCustomLevel()

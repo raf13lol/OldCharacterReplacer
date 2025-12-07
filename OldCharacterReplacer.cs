@@ -31,7 +31,6 @@ public partial class OldCharacterReplacer : BaseUnityPlugin
     private void Awake()
     {
         logger = Logger;
-        
         loadTexture2D = typeof(RDEditorUtils).GetMethod("LoadTextureFileToCache", BindingFlags.Static | BindingFlags.NonPublic);
 
         charReplacement = Config.Bind("General", "ReplaceCharacters", true, "Whether to replace characters or not with older versions if the level version matches.");

@@ -14,8 +14,8 @@ public partial class OldCharacterReplacer
     public class ChangeCharPatch
     {
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(scrRowEntities), nameof(scrRowEntities.ChangeCharacter))]
-        public static bool RowPrefix(scrRowEntities __instance, Character newChar)
+        [HarmonyPatch(typeof(RowEntity), nameof(RowEntity.ChangeCharacter))]
+        public static bool RowPrefix(RowEntity __instance, Character newChar)
         {
             if (!OCRUtils.IsCustomLevel())
                 return true;
@@ -45,7 +45,7 @@ public partial class OldCharacterReplacer
             __instance.barelyAnimName = "barely";
             __instance.missedAnimName = "missed";
             __instance.happyAnimName = "happy";
-            __instance.shaderRenderer.material.SetPalette("");
+            // __instance.shaderRenderer.material.SetPalette("");
             __instance.customAnimation.enabled = false;
             __instance.customAnimation.currentClip = null;
 
@@ -59,15 +59,15 @@ public partial class OldCharacterReplacer
 
         // messes with palette so gotta mess back
         [HarmonyPostfix]
-        [HarmonyPatch(typeof(scrRowEntities), nameof(scrRowEntities.ChangeCharacter))]
-        public static void CCRowEntPostfix(scrRowEntities __instance, Character newChar)
+        [HarmonyPatch(typeof(RowEntity), nameof(RowEntity.ChangeCharacter))]
+        public static void CCRowEntPostfix(RowEntity __instance, Character newChar)
         {
             if (!OCRUtils.IsCustomLevel())
                 return;
-            if (__instance.character.character != Character.Custom)
-                __instance.character.shaderRenderer.material.SetPalette(__instance.character.character.ToString());
-            else
-                __instance.character.shaderRenderer.material.SetPalette("");   
+            // if (__instance.character.character != Character.Custom)
+            //     __instance.character.shaderRenderer.material.SetPalette(__instance.character.character.ToString());
+            // else
+            //     __instance.character.shaderRenderer.material.SetPalette("");   
             __instance.character.shaderDataSource = __instance.character;
             __instance.character.UpdateShaderDataSource();
             __instance.character.shaderData.CopyFrom(__instance.shaderData);
