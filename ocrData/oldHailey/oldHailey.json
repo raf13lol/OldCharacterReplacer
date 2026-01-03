@@ -2,7 +2,7 @@
 	"name": "Hailey",
 	"author": "RentaP",
 	"size": [33, 33],
-	"voice": "Girl",
+	"voice": "Hailey",
 	"clips": [
 		{ "name": "neutral", "frames": [1, 0], "loop": "onBeat", "fps": 0, "loopStart": 0, "portraitOffset": [5, 6], "portraitSize": [25, 25] },
 		{ "name": "happy", "frames": [2, 3], "loop": "no", "fps": 2, "loopStart": 0, "portraitOffset": [5, 6], "portraitSize": [25, 25] },

@@ -30,6 +30,7 @@ public class OCRUtils
         [Character.Paige, 56, Character.Custom, "olderPaige"],
 
         [Character.Paige, 65, Character.Custom, "oldPaige"],
+        [Character.SmokinBarista, 65, Character.Custom, "oldNicole"],
     ];
 
 	public static int GetVersion()

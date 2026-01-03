@@ -3,7 +3,7 @@
 	"author": "RentaP",
 	"size": [33, 33],
     "portraitOffset": [3, 5],
-	"voice": "Boy",
+	"voice": "Logan",
 	"clips": [
 			{ "name" : "neutral", "frames" : [1, 0], "loop" : "onBeat", "fps" : 0},
 			{ "name" : "whaat", "frames" : [31, 32], "loop" : "onBeat", "fps" : 0},
