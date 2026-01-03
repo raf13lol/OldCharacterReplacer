@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using RDLevelEditor;
@@ -28,8 +27,13 @@ public class OCRUtils
         [Character.Bodybuilder, 55, Character.Custom, "oldBodybuilder"],
         
         [Character.Miner, 56, Character.Custom, "oldMiner"],
-        [Character.Paige, 56, Character.Custom, "oldPaige"],
+        [Character.Paige, 56, Character.Custom, "olderPaige"],
+
+        [Character.Paige, 65, Character.Custom, "oldPaige"],
     ];
+
+	public static int GetVersion()
+		=> OldCharacterReplacer.overrideVersion.Value != 0 ? OldCharacterReplacer.overrideVersion.Value : RDLevelData.current.settings.version;
 
     public static CharacterPlusCustom GetOldCharacter(Character character)
     {
@@ -38,7 +42,7 @@ public class OCRUtils
 
         Character oldChar = character;
         string customPath = null;
-        int version = RDLevelData.current.settings.version;
+        int version = GetVersion();
 
         foreach (var list in chars)
         {
@@ -64,37 +68,27 @@ public class OCRUtils
         if (!IsCustomLevel())
             return;
 
-        var path = Path.Combine(OldCharacterReplacer.path, name);
-        var dictionaryPrefix = OldCharacterReplacer.dictionaryPrefix;
         var ccd = scnGame.instance.currentLevel.customCharacterData;
-        var key = dictionaryPrefix + name;
+        var key = OldCharacterReplacer.dictionaryPrefix + name;
         if (ccd.ContainsKey(key))
             return;
 
-        Texture2D img = LoadTex2D(Path.Combine(path, $"{name}.png"), key + "normal", false);
-        Texture2D outline = LoadTex2D(Path.Combine(path, $"{name}_outline.png"), key + "outline", true);
-        Texture2D glow = LoadTex2D(Path.Combine(path, $"{name}_glow.png"), key + "glow", true);
-        Texture2D freeze = LoadTex2D(Path.Combine(path, $"{name}_freeze.png"), key + "freeze", true);
+        Texture2D img = OldCharacterReplacer.LoadTextureFileToCache(Path.Combine(name, $"{name}.png"), name + "normal", false);
+        Texture2D outline = OldCharacterReplacer.LoadTextureFileToCache(Path.Combine(name, $"{name}_outline.png"), name + "outline", true);
+        Texture2D glow = OldCharacterReplacer.LoadTextureFileToCache(Path.Combine(name, $"{name}_glow.png"), name + "glow", true);
+        Texture2D freeze = OldCharacterReplacer.LoadTextureFileToCache(Path.Combine(name, $"{name}_freeze.png"), name + "freeze", true);
 
-        string jsonTxt = File.ReadAllText(Path.Combine(path, $"{name}.json"));
-        img.filterMode = FilterMode.Point;
-        img.wrapMode = TextureWrapMode.Clamp;
+        string jsonTxt = File.ReadAllText(Path.Combine(OldCharacterReplacer.path, name, $"{name}.json"));
+
+        img.filterMode = outline.filterMode = glow.filterMode = freeze.filterMode = FilterMode.Point;
+        img.wrapMode = outline.wrapMode = glow.wrapMode = freeze.wrapMode = TextureWrapMode.Clamp;
 
         LevelBase.LoadCustomCharacter(ccd, key, jsonTxt, img, outline, glow, freeze);
     }
 
-    private static Texture2D LoadTex2D(string path, string key, bool isAlpha8)
-    {
-        if (scrVfxControl.textureCache.TryGetValue(key, out CachedTexture tex))
-            return tex.texture;
-            
-        return (Texture2D)OldCharacterReplacer.loadTexture2D.Invoke(null, [scrVfxControl.textureCache, path, key, isAlpha8]);
-    }
 
     public static bool IsCustomLevel()
-    {
-        return scnGame.levelToLoadSource == LevelSource.ExternalPath;
-    }
+    	=> OldCharacterReplacer.overrideVersion.Value != 0 || scnGame.levelToLoadSource == LevelSource.ExternalPath;
 }
 
 public struct CharacterPlusCustom(Character chr, string ccp)

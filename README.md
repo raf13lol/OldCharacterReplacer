@@ -1,8 +1,10 @@
 # OldCharacterReplacer
 
-## bepinex 6 mod...
+## bepinex 5/6 (mono) mod...
 
-get bepinex 5 version from [Jci fork](https://github.com/RandomGuyJCI/OldCharacterReplacer)
+bepinex 6 version is the regularly named one (Doesn't include bpe5 in its filename)
+
+Get bepinex 5 version via the dll file called com.rhythmdr.bpe5oldcharacterreplacer.zip in releases
 
 another mod for rhythm doctor, this time it actually needs a data folder
 

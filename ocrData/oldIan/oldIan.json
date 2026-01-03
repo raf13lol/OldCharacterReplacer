@@ -3,6 +3,7 @@
     "voice": "Ian",
     "size": [32, 37],
     "portraitOffset": [4, 12],
+    "portraitSize": [28, 25],
     "clips" : [
         { "name" : "neutral", "frames" : [6,7,8], "loop" : "yes", "fps" : 6.8},
         { "name" : "happy", "frames" : [6], "loop" : "off", "fps" : 0},

@@ -9,50 +9,23 @@ namespace OldCharacterReplacer;
 public partial class OldCharacterReplacer
 #pragma warning restore BepInEx002 // Classes with BepInPlugin attribute must inherit from BaseUnityPlugin
 {
-    [HarmonyPatch(typeof(LevelEvent_ShowDialogue), nameof(LevelEvent_ShowDialogue.Prepare))]
+    [HarmonyPatch(typeof(RDInk), nameof(RDInk.ParsePortrait))]
     public class DialoguePatch
     {
-        public static void Prefix(LevelEvent_ShowDialogue __instance)
+        public static void Postfix(string fullName, ref bool isInternal, ref string charName, ref string expression)
         {
-            if (!OCRUtils.IsCustomLevel())
+            if (!OCRUtils.IsCustomLevel() || !isInternal)
                 return;
 
-            string[] array = __instance.text.Split("\n", StringSplitOptions.RemoveEmptyEntries);
-            foreach (string line in array)
-            {
-                int colonIndex = line.IndexOf(":");
-                if (colonIndex == -1)
-                    continue;
-
-                string nameWithMaybeExpr = line[..colonIndex].Trim();
-                int exprIndex = nameWithMaybeExpr.IndexOf("_");
-                string charName = nameWithMaybeExpr;
-
-                // does using discard _ modify the variable "in place" ?
-                if (exprIndex != -1)
-                    charName = charName[..exprIndex];
-
-                if (!Enum.TryParse(typeof(Character), charName, out var uncastedCharacter))
-                    continue;
-
-                var character = (Character)uncastedCharacter;
-                var oldChar = OCRUtils.GetOldCharacter(character);
-                if (character == oldChar.character)
-                    continue;
-
-                var replacedCharName = oldChar.character.ToString();
-                if (oldChar.character == Character.Custom)
-                    replacedCharName = oldChar.customCharacterName;
-
-                Regex regex = new($"^{character}(_[A-Za-z0-9]*)?:", RegexOptions.Multiline | RegexOptions.IgnoreCase);
-                string replaceText = $"{replacedCharName}$1:";
-                // this must be old paige and have no expression, if so, we set to conversing as to not look weird
-                if (character == Character.Paige && exprIndex == -1 && RDLevelData.current.settings.version < 39)
-                    replaceText = replaceText.Replace("$1", "_conversing");
-
-                __instance.text = regex.Replace(__instance.text, replaceText);
-            }
-            return;
+			int exprIndex = fullName.IndexOf('_');
+			if (charName == Character.Paige.ToString() && exprIndex == -1 && OCRUtils.GetVersion() < 39)
+				expression = "conversing";
+			Character character = Enum.Parse<Character>(charName, true);
+			CharacterPlusCustom oldChar = OCRUtils.GetOldCharacter(character);
+			if (oldChar.character != Character.Custom)
+				return;
+            charName = oldChar.customCharacterName;
+			isInternal = false;
         }
     }
 }
