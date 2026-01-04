@@ -1,7 +1,6 @@
-using System;
-using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using System.Reflection.Emit;
 using HarmonyLib;
-using RDLevelEditor;
 
 namespace OldCharacterReplacer;
 
@@ -9,13 +8,12 @@ namespace OldCharacterReplacer;
 public partial class OldCharacterReplacer
 #pragma warning restore BepInEx002 // Classes with BepInPlugin attribute must inherit from BaseUnityPlugin
 {
+	[HarmonyPatch(typeof(scrChar), nameof(scrChar.Setup))]
     public class CharPatch
     {
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(scrChar), nameof(scrChar.Setup))]
-        public static void SetupPrefix(ref Character character, ref string customCharacterName)
+        public static void Prefix(ref Character character, ref string customCharacterName, ref string expression)
 		{
-			if (character == Character.Custom || customCharacterName != null)
+			if (scnGame.instance == null || character == Character.Custom || customCharacterName != null)
 				return;
 			CharacterPlusCustom oldChar = OCRUtils.GetOldCharacter(character);
 			if (oldChar.character != Character.Custom)
@@ -23,6 +21,6 @@ public partial class OldCharacterReplacer
 			character = oldChar.character;
 			customCharacterName = oldChar.customCharacterName;
 		}
-    }
+	}
 }
 

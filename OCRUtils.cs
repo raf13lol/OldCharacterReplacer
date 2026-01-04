@@ -33,6 +33,9 @@ public class OCRUtils
         [Character.SmokinBarista, 65, Character.Custom, "oldNicole"],
     ];
 
+	// override version only...
+	public static Dictionary<string, CustomAnimationData> StoryModeCustomCharacterData = [];
+	
 	public static int GetVersion()
 		=> OldCharacterReplacer.overrideVersion.Value != 0 ? OldCharacterReplacer.overrideVersion.Value : RDLevelData.current.settings.version;
 
@@ -63,13 +66,14 @@ public class OCRUtils
         return new(oldChar, OldCharacterReplacer.dictionaryPrefix + customPath);
     }
 
+
     // LevelEvent_MakeRow.UpdateCustomCharacter
     public static void CreateCustomCharacter(string name)
     {
         if (!IsCustomLevel())
             return;
 
-        var ccd = scnGame.instance.currentLevel.customCharacterData;
+        var ccd = scnGame.instance?.currentLevel.customCharacterData ?? StoryModeCustomCharacterData;
         var key = OldCharacterReplacer.dictionaryPrefix + name;
         if (ccd.ContainsKey(key))
             return;
@@ -86,7 +90,6 @@ public class OCRUtils
 
         LevelBase.LoadCustomCharacter(ccd, key, jsonTxt, img, outline, glow, freeze);
     }
-
 
     public static bool IsCustomLevel()
     	=> OldCharacterReplacer.overrideVersion.Value != 0 || scnGame.levelToLoadSource == LevelSource.ExternalPath;

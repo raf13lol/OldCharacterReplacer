@@ -4,6 +4,14 @@
         40,
         40
     ],
+    "portraitOffset": [
+        5,
+        11
+    ],
+    "portraitSize": [
+        25,
+        25
+    ],
     "voice": "Bodybuilder",
     "clips": [
         {
@@ -13,16 +21,7 @@
                 0
             ],
             "loop": "onBeat",
-            "fps": 0,
-            "loopStart": 0,
-            "portraitOffset": [
-                5,
-                11
-            ],
-            "portraitSize": [
-                25,
-                25
-            ]
+            "fps": 0
         },
         {
             "name": "happy",
@@ -32,16 +31,7 @@
                 3
             ],
             "loop": "onBeat",
-            "fps": 0,
-            "loopStart": 0,
-            "portraitOffset": [
-                5,
-                11
-            ],
-            "portraitSize": [
-                25,
-                25
-            ]
+            "fps": 0
         },
         {
             "name": "barely",
@@ -50,16 +40,7 @@
                 0
             ],
             "loop": "no",
-            "fps": 0,
-            "loopStart": 0,
-            "portraitOffset": [
-                5,
-                11
-            ],
-            "portraitSize": [
-                25,
-                25
-            ]
+            "fps": 0
         },
         {
             "name": "missed",
@@ -68,16 +49,7 @@
                 0
             ],
             "loop": "no",
-            "fps": 0,
-            "loopStart": 0,
-            "portraitOffset": [
-                5,
-                11
-            ],
-            "portraitSize": [
-                25,
-                25
-            ]
+            "fps": 0
         }
     ]
 }

@@ -6,9 +6,9 @@
     "portraitSize": [28, 25],
     "clips" : [
         { "name" : "neutral", "frames" : [6,7,8], "loop" : "yes", "fps" : 6.8},
-        { "name" : "happy", "frames" : [6], "loop" : "off", "fps" : 0},
-        { "name" : "barely", "frames" : [6], "loop" : "off", "fps" : 0},
-        { "name" : "missed", "frames" : [6], "loop" : "off", "fps" : 0},
+        { "name" : "happy", "frames" : [6], "loop" : "no", "fps" : 0},
+        { "name" : "barely", "frames" : [6], "loop" : "no", "fps" : 0},
+        { "name" : "missed", "frames" : [6], "loop" : "no", "fps" : 0},
 
         { "name" : "sighing", "frames" : [0,1,2,3,4], "loop" : "yes", "fps" : 4},
         { "name" : "explaining",   "frames" : [6,7,8], "loop" : "yes", "fps" : 6.8},

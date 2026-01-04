@@ -1,7 +1,5 @@
 using HarmonyLib;
 using System;
-using RDLevelEditor;
-using System.Text.RegularExpressions;
 
 namespace OldCharacterReplacer;
 
@@ -9,13 +7,13 @@ namespace OldCharacterReplacer;
 public partial class OldCharacterReplacer
 #pragma warning restore BepInEx002 // Classes with BepInPlugin attribute must inherit from BaseUnityPlugin
 {
-    [HarmonyPatch(typeof(RDInk), nameof(RDInk.ParsePortrait))]
-    public class DialoguePatch
-    {
-        public static void Postfix(string fullName, ref bool isInternal, ref string charName, ref string expression)
-        {
-            if (!OCRUtils.IsCustomLevel() || !isInternal)
-                return;
+	[HarmonyPatch(typeof(RDInk), nameof(RDInk.ParsePortrait))]
+	public class DialoguePatch
+	{
+		public static void Postfix(string fullName, ref bool isInternal, ref string charName, ref string expression)
+		{
+			if (!OCRUtils.IsCustomLevel() || !isInternal)
+				return;
 
 			int exprIndex = fullName.IndexOf('_');
 			if (charName == Character.Paige.ToString() && exprIndex == -1 && OCRUtils.GetVersion() < 39)
@@ -24,9 +22,9 @@ public partial class OldCharacterReplacer
 			CharacterPlusCustom oldChar = OCRUtils.GetOldCharacter(character);
 			if (oldChar.character != Character.Custom)
 				return;
-            charName = oldChar.customCharacterName;
+			charName = oldChar.customCharacterName;
 			isInternal = false;
-        }
-    }
+		}
+	}
 }
 
