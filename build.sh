@@ -8,5 +8,9 @@ dotnet build
 echo "Zipping files..."
 rm -rf com.rhythmdr.oldcharacterreplacer.zip
 rm -rf com.rhythmdr.bpe5oldcharacterreplacer.zip
-zip -r com.rhythmdr.oldcharacterreplacer.zip ocrData bin/Debug/netstandard2.1/com.rhythmdr.oldcharacterreplacer.dll
-zip -r com.rhythmdr.bpe5oldcharacterreplacer.zip ocrData bin/Debug/netstandard2.1/com.rhythmdr.bpe5oldcharacterreplacer.dll
+cp bin/Debug/netstandard2.1/com.rhythmdr.oldcharacterreplacer.dll com.rhythmdr.oldcharacterreplacer.dll 
+cp bin/Debug/netstandard2.1/com.rhythmdr.bpe5oldcharacterreplacer.dll com.rhythmdr.bpe5oldcharacterreplacer.dll 
+zip -r com.rhythmdr.oldcharacterreplacer.zip ocrData com.rhythmdr.oldcharacterreplacer.dll
+zip -r com.rhythmdr.bpe5oldcharacterreplacer.zip ocrData com.rhythmdr.bpe5oldcharacterreplacer.dll
+rm -rf com.rhythmdr.oldcharacterreplacer.dll
+rm -rf com.rhythmdr.bpe5oldcharacterreplacer.dll
