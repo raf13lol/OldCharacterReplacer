@@ -1,7 +1,9 @@
 using System.IO;
 using HarmonyLib;
 using Newtonsoft.Json;
+using RDLevelEditor;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 namespace OldCharacterReplacer;
 
@@ -55,7 +57,18 @@ public partial class OldCharacterReplacer
 			__instance.sprite.CurrentSprite.material.SetTexture(RDShaderProperties.OutlineTexProperty, outline);
 			__instance.sprite.CurrentSprite.material.SetTexture(RDShaderProperties.GlowTexProperty, glow);
 			NeedsRevertingToNewHeart = true;
+
 		}
+	
+		[HarmonyPostfix]
+		[HarmonyPatch(typeof(scrHeart), "Update")]
+		public static void Postfix(scrHeart __instance)
+        {
+			__instance.shaderDataToUse.SetPropertiesInRenderer(__instance.shaderRenderer);
+			// __instance.sprite.CurrentSprite.material.SetInt(RDShaderProperties.OutlineProperty, 1);
+			// logger.LogMessage(__instance.sprite.CurrentSprite.material.GetInt(RDShaderProperties.OutlineProperty));
+			// logger.LogMessage(__instance.sprite.CurrentSprite.material.GetColor(RDShaderProperties.GlowColorProperty));
+        }
 	}
 }
 
